@@ -869,10 +869,19 @@ function! phpapi#checkLineForRef()
   endif
 endfunction
 
+function! phpapi#reshowRef()
+  if exists("b:ref")
+    if b:ref.line == line('.')
+      call phpapi#showRef()
+    endif
+  endif
+endfunction
+
 function! phpapi#clearRef()
   let &l:statusline = g:phpapi#statusline
   augroup phpapi
     au!
+    au InsertEnter  <buffer> call phpapi#reshowRef()
   augroup END
 endfunction
 
